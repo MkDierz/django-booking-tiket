@@ -40,7 +40,6 @@ def order(request):
             form = form.save(commit=False)
             form.user = user
             form.save()
-            # save the form data to model
 
     context["form"] = OrderForm()
 

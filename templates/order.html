@@ -6,24 +6,28 @@
 <!-- Hero Section Begin -->
 <section class="w-full bg-gray my-5">
     <div class="container">
-        <div class="row">
-            <div class="col-5 ">
+        <div class="col">
+            {% if user %}{% endif %}
+            <div class="row-5 ">
                 <div class="card p-4">
                     {% crispy form form.helper %}
                 </div>
             </div>
             <div class="col-5">
-                <table class="table">
+                <table class="table ">
                     <thead>
                         <tr>
                             <th scope="col">Ticket</th>
                             <th scope="col">Tanggal</th>
                             <th scope="col">Jumlah</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Nomor Ref Pembayaran</th>
+                            <th scope="col">Status Pembayaran</th>
+                            <th scope="col">E-ticket</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class=" text-nowrap">
                         {% for o in order %}
                         <tr>
                             <td>
@@ -38,14 +42,68 @@
                             <td>
                                 {{ o.total }}
                             </td>
-                            <td class="">
-                                <a href="{% url 'order_delete' o.id %}" class="text-white btn btn-danger">delete
-                                    order</a>
+                            <td>
+                                {{ o.payment_ref }}
+                            </td>
+                            <td>
+                                {% if o.payment_status %}
+                                Diterima
+                                {% else %}
+                                On Proses
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if o.payment_status %}
+                                {{ o.uuid }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                    Bayar
+                                </button>
+                            </td>
+                            <td>
+
+                                <a href="{% url 'order_delete' o.id %}" class="col text-white btn btn-danger">
+                                    delete order
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cara Pembayaran</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Untuk Pembayaran Transfer ke
+                    <br>
+                    No Rekening : 1111-111-111-11
+                    <br>
+                    Nama Bank : BSI
+                    <br>
+                    *pastikan menambahakan nomor refresnsi pembayaran saat fransfer agar admin dapat memvertivikasi
+                    pembayaran
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
