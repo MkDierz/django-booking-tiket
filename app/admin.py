@@ -13,8 +13,9 @@ class OrderAdmin(admin.ModelAdmin):
         "uuid",
         "user",
         "ticket",
-        "payment_status",
+        "total",
         "payment_ref",
+        "payment_status",
     ]
     list_editable = ["payment_status"]
     pass
